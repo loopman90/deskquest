@@ -27,51 +27,90 @@ Regen helps you balance focus sessions with recovery, hydration, meals, movement
 - Dark mode, light mode and reduced-motion friendly CSS
 - Local-only data storage
 
-## Installation For Testing
+## Installation
 
-### Latest Release
+Regen is not listed in the Obsidian Community Plugin browser yet. Until it is accepted there, use one of the testing installation methods below.
 
-Download the latest release from:
+### Option 1: Install With BRAT
 
-[github.com/loopman90/regen/releases/latest](https://github.com/loopman90/regen/releases/latest)
+BRAT is the easiest way to install and update beta Obsidian plugins from GitHub.
 
-Place these files in your vault:
+1. In Obsidian, open **Settings -> Community plugins**.
+2. Turn off **Restricted mode** if it is still enabled.
+3. Click **Browse** and install **BRAT**.
+4. Enable **BRAT**.
+5. Open the command palette.
+6. Run **BRAT: Add a beta plugin for testing**.
+7. Paste this repository URL:
 
-```text
-.obsidian/plugins/regen/
-```
+   ```text
+   https://github.com/loopman90/regen
+   ```
 
-Required files:
+8. Confirm the installation.
+9. Go back to **Settings -> Community plugins**.
+10. Enable **Regen**.
+11. Run **Regen: Open Regen** from the command palette.
 
-```text
-main.js
-manifest.json
-styles.css
-```
+### Option 2: Manual Install From GitHub Release
 
-### BRAT
+Use this if you do not want to use BRAT.
 
-For testing with the BRAT plugin, add this repository:
+1. Download the latest release:
 
-```text
-https://github.com/loopman90/regen
-```
+   [github.com/loopman90/regen/releases/latest](https://github.com/loopman90/regen/releases/latest)
 
-### Manual Build
+2. Download these three files from the release assets:
 
-1. Install dependencies:
+   ```text
+   main.js
+   manifest.json
+   styles.css
+   ```
+
+3. Open your Obsidian vault folder on your computer.
+4. Inside the vault, create this folder if it does not already exist:
+
+   ```text
+   .obsidian/plugins/regen/
+   ```
+
+5. Put the three downloaded files into that folder:
+
+   ```text
+   .obsidian/plugins/regen/main.js
+   .obsidian/plugins/regen/manifest.json
+   .obsidian/plugins/regen/styles.css
+   ```
+
+6. Restart Obsidian, or reload plugins from **Settings -> Community plugins**.
+7. Enable **Regen**.
+8. Run **Regen: Open Regen** from the command palette.
+
+### Option 3: Build From Source
+
+Use this if you want to develop Regen locally.
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/loopman90/regen.git
+   cd regen
+   ```
+
+2. Install dependencies:
 
    ```bash
    npm install
    ```
 
-2. Build the plugin:
+3. Build the plugin:
 
    ```bash
    npm run build
    ```
 
-3. Copy these files into your vault plugin folder:
+4. Copy the built plugin files into your vault:
 
    ```text
    .obsidian/plugins/regen/
@@ -85,7 +124,24 @@ https://github.com/loopman90/regen
    styles.css
    ```
 
-4. Open Obsidian, go to **Settings -> Community plugins**, reload installed plugins and enable **Regen**.
+5. Enable **Regen** in Obsidian.
+
+### Updating
+
+If you installed with BRAT, use **BRAT: Check for updates to all beta plugins**.
+
+If you installed manually, download the latest release assets again and replace the old files in:
+
+```text
+.obsidian/plugins/regen/
+```
+
+### Troubleshooting
+
+- If Regen does not appear, make sure the folder name is exactly `regen`.
+- If Obsidian says the plugin failed to load, confirm that `main.js`, `manifest.json` and `styles.css` are all in the same folder.
+- If Obsidian reports a version mismatch, use a release tag that exactly matches `manifest.json`, such as `0.3.0` rather than `v0.3.0`.
+- If the dashboard does not open, run **Regen: Open Regen** from the command palette.
 
 ## Usage
 
