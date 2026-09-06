@@ -8,14 +8,10 @@ export class RegenSettingTab extends PluginSettingTab {
     super(app, plugin);
   }
 
-  display(): void {
-    this.renderSettings(this.containerEl);
-  }
-
   getSettingDefinitions(): SettingDefinitionItem[] {
     return [
       {
-        name: "Regen Settings",
+        name: "General",
         desc: "Configure the HUD, reminders, routines, appearance and local tracking.",
         render: (setting) => {
           this.renderSettings(setting.settingEl);
@@ -28,7 +24,7 @@ export class RegenSettingTab extends PluginSettingTab {
     containerEl.empty();
     containerEl.addClass("regen-settings");
 
-    new Setting(containerEl).setName("Regen Settings").setHeading();
+    new Setting(containerEl).setName("General").setHeading();
     containerEl.createEl("p", {
       text: "All values are local game indicators. Regen never blocks work and does not provide medical advice.",
       cls: "setting-item-description"
@@ -206,7 +202,9 @@ export class RegenSettingTab extends PluginSettingTab {
       .setName("Skin")
       .setDesc("Skins only affect presentation; game logic stays separate.")
       .addDropdown((dropdown) => {
-        SKINS.forEach((skin) => dropdown.addOption(skin.id, skin.name));
+        SKINS.forEach((skin) => {
+          dropdown.addOption(skin.id, skin.name);
+        });
         dropdown.setValue(this.plugin.data.settings.skin);
         dropdown.onChange((value) => {
           this.plugin.data.settings.skin = value;

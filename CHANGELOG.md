@@ -2,6 +2,14 @@
 
 All notable changes to Regen will be documented in this file.
 
+## [0.3.3] - 2026-09-06
+
+### Fixed
+
+- Removed the deprecated settings tab `display()` method.
+- Renamed the settings heading to avoid redundant plugin and settings wording.
+- Changed dropdown option callbacks to avoid returning component instances.
+
 ## [0.3.2] - 2026-09-06
 
 ### Fixed

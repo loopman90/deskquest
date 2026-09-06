@@ -1,7 +1,7 @@
 {
   "id": "regen",
   "name": "Regen",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "minAppVersion": "1.13.0",
   "description": "A local, gamified work-rhythm HUD: work, recover, continue.",
   "author": "Regen",

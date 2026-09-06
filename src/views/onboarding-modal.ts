@@ -96,7 +96,9 @@ export class OnboardingModal extends Modal {
     new Setting(parent)
       .setName("Skin")
       .addDropdown((dropdown) => {
-        SKINS.forEach((skin) => dropdown.addOption(skin.id, skin.name));
+        SKINS.forEach((skin) => {
+          dropdown.addOption(skin.id, skin.name);
+        });
         dropdown.setValue(this.plugin.data.settings.skin);
         dropdown.onChange((value) => {
           this.plugin.data.settings.skin = value;

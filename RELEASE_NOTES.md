@@ -1,4 +1,4 @@
-# Regen v0.3.2
+# Regen v0.3.3
 
 Community review cleanup release.
 
@@ -39,6 +39,9 @@ Community review cleanup release.
 - `builtin-modules` dependency removed
 - Minimum app version updated to match settings search and destructive button APIs
 - Development dependency metadata now matches the declared minimum app version
+- Settings tab now uses declarative settings without deprecated `display()`
+- Settings heading avoids redundant plugin and settings wording
+- Dropdown option callbacks no longer return component instances
 
 ## Safety
 
