@@ -11,7 +11,7 @@ export class RegenSettingTab extends PluginSettingTab {
   getSettingDefinitions(): SettingDefinitionItem[] {
     return [
       {
-        name: "General",
+        name: "Core rhythm",
         desc: "Configure the HUD, reminders, routines, appearance and local tracking.",
         render: (setting) => {
           this.renderSettings(setting.settingEl);
@@ -24,7 +24,7 @@ export class RegenSettingTab extends PluginSettingTab {
     containerEl.empty();
     containerEl.addClass("regen-settings");
 
-    new Setting(containerEl).setName("General").setHeading();
+    new Setting(containerEl).setName("Core rhythm").setHeading();
     containerEl.createEl("p", {
       text: "All values are local game indicators. Regen never blocks work and does not provide medical advice.",
       cls: "setting-item-description"

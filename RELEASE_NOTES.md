@@ -1,4 +1,4 @@
-# Regen v0.4.0
+# Regen v0.4.1
 
 Reminder UX and statistics release.
 
@@ -48,6 +48,7 @@ Reminder UX and statistics release.
 - Dashboard now includes Today, This Week and This Month statistics panels
 - Monthly stats include a recent-days history table
 - Test coverage added for combined recovery reminders
+- Settings heading renamed to “Core rhythm” for review compatibility
 
 ## Safety
 

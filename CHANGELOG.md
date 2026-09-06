@@ -2,6 +2,12 @@
 
 All notable changes to Regen will be documented in this file.
 
+## [0.4.1] - 2026-09-06
+
+### Fixed
+
+- Renamed the settings heading to `Core rhythm` for review compatibility.
+
 ## [0.4.0] - 2026-09-06
 
 ### Added
