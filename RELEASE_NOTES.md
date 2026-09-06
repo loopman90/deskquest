@@ -1,6 +1,6 @@
-# Regen v0.3.3
+# Regen v0.4.0
 
-Community review cleanup release.
+Reminder UX and statistics release.
 
 ## Included
 
@@ -42,6 +42,12 @@ Community review cleanup release.
 - Settings tab now uses declarative settings without deprecated `display()`
 - Settings heading avoids redundant plugin and settings wording
 - Dropdown option callbacks no longer return component instances
+- Recovery reminders can bundle break, hydration, movement and eye objectives
+- Reminder objectives can be completed directly from the dashboard
+- Snooze options now offer 5 and 15 minute choices
+- Dashboard now includes Today, This Week and This Month statistics panels
+- Monthly stats include a recent-days history table
+- Test coverage added for combined recovery reminders
 
 ## Safety
 

@@ -52,9 +52,17 @@ export interface ReminderState {
   message: string;
   level: ReminderLevel;
   category: "stamina" | "hydration" | "food" | "movement" | "eyes" | "recovery";
+  objectives: ReminderObjective[];
   createdAt: number;
   snoozedUntil?: number;
   snoozeCount: number;
+}
+
+export interface ReminderObjective {
+  id: string;
+  label: string;
+  category: "break" | "hydration" | "movement" | "eyes" | "food";
+  completed: boolean;
 }
 
 export interface DailyStats {

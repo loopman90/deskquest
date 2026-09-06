@@ -2,6 +2,20 @@
 
 All notable changes to Regen will be documented in this file.
 
+## [0.4.0] - 2026-09-06
+
+### Added
+
+- Combined recovery reminders with optional break, hydration, movement and eye objectives.
+- Objective-specific dashboard actions for recovery reminders.
+- Today, This Week and This Month statistics panels.
+- Monthly recent-days history table.
+- Test coverage for bundled reminder objectives.
+
+### Changed
+
+- Reminder snooze controls now offer 5 and 15 minute choices.
+
 ## [0.3.3] - 2026-09-06
 
 ### Fixed

@@ -31,3 +31,27 @@ test("snoozed reminder is not replaced before snooze expires", () => {
   assert.equal(data.activeReminder?.id, firstId);
   assert.equal(data.activeReminder?.snoozeCount, 1);
 });
+
+test("recovery reminders bundle due routine objectives", () => {
+  const now = Date.UTC(2026, 8, 6, 12, 0, 0);
+  const data = createDefaultData();
+  data.activeSession = {
+    id: "session-test",
+    startedAt: now - 80 * 60000,
+    activeMs: 80 * 60000,
+    idleMs: 0,
+    breakMs: 0,
+    longestContinuousMs: 80 * 60000,
+    status: "active"
+  };
+  data.lastHydrationAt = now - 90 * 60000;
+  data.lastMovementAt = now - 90 * 60000;
+  data.lastEyeBreakAt = now - 30 * 60000;
+  const manager = new ReminderManager(data, () => undefined);
+  manager.evaluate(now);
+  assert.equal(data.activeReminder?.category, "recovery");
+  assert.deepEqual(
+    data.activeReminder?.objectives.map((item) => item.category),
+    ["break", "hydration", "movement", "eyes"]
+  );
+});
