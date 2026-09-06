@@ -1,20 +1,20 @@
 import { Plugin } from "obsidian";
 import { createDefaultData, DEFAULT_SETTINGS } from "./defaults";
-import { DeskQuestData } from "./types";
+import { RegenData } from "./types";
 
-export class DeskQuestStore {
+export class RegenStore {
   private saveTimer: number | undefined;
 
   constructor(private readonly plugin: Plugin) {}
 
-  async load(): Promise<DeskQuestData> {
+  async load(): Promise<RegenData> {
     const saved = await this.plugin.loadData();
     const defaults = createDefaultData();
     if (!saved || typeof saved !== "object") {
       return defaults;
     }
 
-    const partial = saved as Partial<DeskQuestData>;
+    const partial = saved as Partial<RegenData>;
     return {
       ...defaults,
       ...partial,
@@ -37,18 +37,20 @@ export class DeskQuestStore {
       xp: {
         ...defaults.xp,
         ...partial.xp
-      }
+      },
+      reminderHistory: partial.reminderHistory ?? defaults.reminderHistory,
+      lastQuestDate: partial.lastQuestDate ?? defaults.lastQuestDate
     };
   }
 
-  requestSave(data: DeskQuestData): void {
+  requestSave(data: RegenData): void {
     window.clearTimeout(this.saveTimer);
     this.saveTimer = window.setTimeout(() => {
       void this.plugin.saveData(data);
     }, 500);
   }
 
-  async flush(data: DeskQuestData): Promise<void> {
+  async flush(data: RegenData): Promise<void> {
     window.clearTimeout(this.saveTimer);
     await this.plugin.saveData(data);
   }

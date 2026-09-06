@@ -1,11 +1,15 @@
-import { Notice } from "obsidian";
-import { DeskQuestData, ReminderState } from "../data/types";
+import { RegenData, ReminderState } from "../data/types";
 import { makeId } from "../utils/dates";
 
 const MAX_HISTORY = 100;
+type Notifier = (message: string) => void;
 
 export class ReminderManager {
-  constructor(private readonly data: DeskQuestData, private readonly changed: () => void) {}
+  constructor(
+    private readonly data: RegenData,
+    private readonly changed: () => void,
+    private readonly notify: Notifier = () => undefined
+  ) {}
 
   evaluate(now = Date.now()): void {
     if (!this.data.settings.enabled || !this.data.settings.remindersEnabled) return;
@@ -21,19 +25,19 @@ export class ReminderManager {
     this.data.activeReminder = next;
     this.data.reminderHistory = [next, ...this.data.reminderHistory].slice(0, MAX_HISTORY);
     if (next.level !== "passive") {
-      new Notice(`${next.title}: ${next.message}`);
+      this.notify(`${next.title}: ${next.message}`);
     }
     this.changed();
   }
 
-  snooze(minutes = 10): void {
+  snooze(minutes = 10, now = Date.now()): void {
     if (!this.data.activeReminder) {
-      new Notice("No DeskQuest reminder to snooze.");
+      this.notify("No Regen reminder to snooze.");
       return;
     }
     this.data.activeReminder.snoozeCount += 1;
-    this.data.activeReminder.snoozedUntil = Date.now() + minutes * 60000;
-    new Notice(`DeskQuest reminder snoozed for ${minutes} minutes.`);
+    this.data.activeReminder.snoozedUntil = now + minutes * 60000;
+    this.notify(`Regen reminder snoozed for ${minutes} minutes.`);
     this.changed();
   }
 
@@ -83,7 +87,7 @@ export class ReminderManager {
   }
 }
 
-function isDue(lastAt: number | undefined, now: number, intervalMinutes: number): boolean {
+export function isDue(lastAt: number | undefined, now: number, intervalMinutes: number): boolean {
   if (!lastAt) return true;
   return now - lastAt >= intervalMinutes * 60000;
 }

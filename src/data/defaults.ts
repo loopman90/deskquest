@@ -1,10 +1,11 @@
-import { DeskQuestData, DeskQuestSettings, Quest } from "./types";
+import { RegenData, RegenSettings, Quest } from "./types";
 import { getLevelState } from "../game/level-engine";
+import { todayKey } from "../utils/dates";
 
 export const DISCLAIMER =
-  "DeskQuest is a gamified productivity and work-rhythm tool. Health, Stamina, Hydration and Food are fictional game indicators based on configured routines and activity. DeskQuest does not provide medical advice.";
+  "Regen is a gamified productivity and work-rhythm tool. Health, Stamina, Hydration and Food are fictional game indicators based on configured routines and activity. Regen does not provide medical advice.";
 
-export const DEFAULT_SETTINGS: DeskQuestSettings = {
+export const DEFAULT_SETTINGS: RegenSettings = {
   enabled: true,
   startAutomatically: false,
   trackOutsideObsidian: false,
@@ -82,7 +83,7 @@ export function createDailyQuests(): Quest[] {
   ];
 }
 
-export function createDefaultData(): DeskQuestData {
+export function createDefaultData(): RegenData {
   return {
     settings: DEFAULT_SETTINGS,
     bars: {
@@ -105,6 +106,7 @@ export function createDefaultData(): DeskQuestData {
     ],
     stats: {},
     completedQuestIds: [],
+    lastQuestDate: todayKey(),
     reminderHistory: [],
     onboarded: false,
     schemaVersion: 1

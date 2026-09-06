@@ -1,0 +1,25 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "outDir": ".tmp-tests",
+    "rootDir": ".",
+    "noEmit": false,
+    "declaration": false,
+    "sourceMap": false,
+    "inlineSourceMap": false,
+    "inlineSources": false,
+    "importHelpers": false,
+    "types": [
+      "node"
+    ]
+  },
+  "include": [
+    "src/game/**/*.ts",
+    "src/utils/**/*.ts",
+    "src/core/reminder-manager.ts",
+    "src/data/**/*.ts",
+    "tests/**/*.ts"
+  ]
+}

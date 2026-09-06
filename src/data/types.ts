@@ -89,7 +89,7 @@ export interface WorkdayConfig {
   quietHoursEnd?: string;
 }
 
-export interface DeskQuestSettings {
+export interface RegenSettings {
   enabled: boolean;
   startAutomatically: boolean;
   trackOutsideObsidian: boolean;
@@ -123,8 +123,8 @@ export interface DeskQuestSettings {
   workdays: Record<string, WorkdayConfig>;
 }
 
-export interface DeskQuestData {
-  settings: DeskQuestSettings;
+export interface RegenData {
+  settings: RegenSettings;
   bars: GameBars;
   xp: XpState;
   activeSession?: WorkSession;
@@ -132,6 +132,7 @@ export interface DeskQuestData {
   weeklyGoals: Quest[];
   stats: Record<string, DailyStats>;
   completedQuestIds: string[];
+  lastQuestDate: string;
   activeReminder?: ReminderState;
   reminderHistory: ReminderState[];
   lastHydrationAt?: number;

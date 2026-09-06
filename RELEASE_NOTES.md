@@ -1,11 +1,11 @@
-# DeskQuest v0.2.0
+# Regen v0.3.0
 
-Expanded public starter release.
+Renamed and hardened public starter release.
 
 ## Included
 
 - Obsidian plugin scaffold with strict TypeScript
-- DeskQuest statusbar HUD
+- Regen statusbar HUD
 - Dashboard view
 - Health, Stamina, Hydration and Food game bars
 - XP and level engine
@@ -23,7 +23,14 @@ Expanded public starter release.
 - Reset Today, Reset Game Progress and Reset Everything commands
 - Safer export filenames
 - Daily history panel
+- Project renamed from DeskQuest to Regen
+- Plugin id and package name changed to `regen`
+- GitHub repository links updated for `loopman90/regen`
+- Node built-in test suite for game engines and reminder behavior
+- Release workflow now runs tests before publishing assets
+- Daily quest rollover for long-running Obsidian sessions
+- Latest release and BRAT installation docs
 
 ## Safety
 
-DeskQuest is a gamified productivity and work-rhythm tool. Health, Stamina, Hydration and Food are fictional game indicators based on configured routines and activity. DeskQuest does not provide medical advice.
+Regen is a gamified productivity and work-rhythm tool. Health, Stamina, Hydration and Food are fictional game indicators based on configured routines and activity. Regen does not provide medical advice.

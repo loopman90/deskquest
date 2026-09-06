@@ -1,4 +1,5 @@
 node_modules/
+.tmp-tests/
 main.js
 *.map
 .DS_Store

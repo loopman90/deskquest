@@ -1,10 +1,10 @@
 {
-  "id": "deskquest",
-  "name": "DeskQuest",
-  "version": "0.2.0",
+  "id": "regen",
+  "name": "Regen",
+  "version": "0.3.0",
   "minAppVersion": "1.5.0",
   "description": "A local, gamified work-rhythm HUD for Obsidian: work, recover, continue.",
-  "author": "DeskQuest",
-  "authorUrl": "https://github.com/loopman90/deskquest",
+  "author": "Regen",
+  "authorUrl": "https://github.com/loopman90/regen",
   "isDesktopOnly": false
 }

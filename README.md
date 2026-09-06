@@ -1,12 +1,12 @@
-# DeskQuest
+# Regen
 
-DeskQuest is an Obsidian Community Plugin starter for a local, gamified work-rhythm HUD.
+Regen is an Obsidian Community Plugin starter for a local, gamified work-rhythm HUD.
 
 **Work. Recover. Continue.**
 
-DeskQuest helps you balance focus sessions with recovery, hydration, meals, movement and eye breaks. It is intentionally advisory: it never blocks work, never removes XP, never removes levels and never shames missed days.
+Regen helps you balance focus sessions with recovery, hydration, meals, movement and eye breaks. It is intentionally advisory: it never blocks work, never removes XP, never removes levels and never shames missed days.
 
-> DeskQuest is a gamified productivity and work-rhythm tool. Health, Stamina, Hydration and Food are fictional game indicators based on configured routines and activity. DeskQuest does not provide medical advice.
+> Regen is a gamified productivity and work-rhythm tool. Health, Stamina, Hydration and Food are fictional game indicators based on configured routines and activity. Regen does not provide medical advice.
 
 ## Features
 
@@ -17,7 +17,7 @@ DeskQuest helps you balance focus sessions with recovery, hydration, meals, move
 - Microbreaks, recovery breaks, long breaks and movement quests
 - Hydration, meal and snack check-ins with cooldowns
 - Statusbar HUD: full, compact and minimal
-- DeskQuest dashboard view
+- Regen dashboard view
 - Settings tab with safe defaults
 - 25 presentation-only skins
 - JSON and CSV export commands
@@ -28,6 +28,36 @@ DeskQuest helps you balance focus sessions with recovery, hydration, meals, move
 - Local-only data storage
 
 ## Installation For Testing
+
+### Latest Release
+
+Download the latest release from:
+
+[github.com/loopman90/regen/releases/latest](https://github.com/loopman90/regen/releases/latest)
+
+Place these files in your vault:
+
+```text
+.obsidian/plugins/regen/
+```
+
+Required files:
+
+```text
+main.js
+manifest.json
+styles.css
+```
+
+### BRAT
+
+For testing with the BRAT plugin, add this repository:
+
+```text
+https://github.com/loopman90/regen
+```
+
+### Manual Build
 
 1. Install dependencies:
 
@@ -44,7 +74,7 @@ DeskQuest helps you balance focus sessions with recovery, hydration, meals, move
 3. Copy these files into your vault plugin folder:
 
    ```text
-   .obsidian/plugins/deskquest/
+   .obsidian/plugins/regen/
    ```
 
    Required files:
@@ -55,11 +85,11 @@ DeskQuest helps you balance focus sessions with recovery, hydration, meals, move
    styles.css
    ```
 
-4. Open Obsidian, go to **Settings -> Community plugins**, reload installed plugins and enable **DeskQuest**.
+4. Open Obsidian, go to **Settings -> Community plugins**, reload installed plugins and enable **Regen**.
 
 ## Usage
 
-Open the command palette and run **DeskQuest: Open DeskQuest**.
+Open the command palette and run **Regen: Open Regen**.
 
 Common commands:
 
@@ -72,8 +102,8 @@ Common commands:
 - Register Snack
 - Start Movement Quest
 - End Workday
-- Export DeskQuest Data as JSON
-- Export DeskQuest Stats as CSV
+- Export Regen Data as JSON
+- Export Regen Stats as CSV
 
 ## Presets
 
@@ -97,11 +127,11 @@ Other modes included in the settings model:
 
 ## Skins
 
-DeskQuest includes 25 presentation-only skins. Skins can change color, spacing and HUD feel, but never game logic.
+Regen includes 25 presentation-only skins. Skins can change color, spacing and HUD feel, but never game logic.
 
 ## Privacy
 
-DeskQuest is built to work completely locally:
+Regen is built to work completely locally:
 
 - No account required
 - No AI required
@@ -127,7 +157,7 @@ npm run build
 
 ## Versioning And Releases
 
-DeskQuest uses semver-style versions such as `0.1.0`.
+Regen uses semver-style versions such as `0.3.0`.
 
 For every release, update these files to the same version:
 
@@ -140,7 +170,7 @@ For every release, update these files to the same version:
 Then create and push a matching tag:
 
 ```bash
-git tag v0.2.0
+git tag v0.3.0
 git push origin main --tags
 ```
 
@@ -149,6 +179,16 @@ GitHub Actions will build the plugin and publish a release with the Obsidian plu
 - `main.js`
 - `manifest.json`
 - `styles.css`
+
+## Tests
+
+Run the local test suite:
+
+```bash
+npm test
+```
+
+The release workflow runs tests before publishing Obsidian assets.
 
 ## Roadmap
 
@@ -174,16 +214,16 @@ V1.1+ ideas:
 
 ### Is this a medical app?
 
-No. DeskQuest uses fictional game indicators and does not provide medical advice.
+No. Regen uses fictional game indicators and does not provide medical advice.
 
 ### Does Health measure my real health?
 
 No. Health is a game value based on configured routines and work rhythm.
 
-### Can DeskQuest stop me from working?
+### Can Regen stop me from working?
 
-No. DeskQuest never blocks work. It only suggests recovery.
+No. Regen never blocks work. It only suggests recovery.
 
-### Does DeskQuest need internet?
+### Does Regen need internet?
 
 No. The plugin is designed to run locally.

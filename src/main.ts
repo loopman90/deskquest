@@ -1,37 +1,37 @@
 import { Notice, Plugin, WorkspaceLeaf } from "obsidian";
-import { DeskQuestStore } from "./data/store";
-import { DeskQuestData } from "./data/types";
+import { RegenStore } from "./data/store";
+import { RegenData } from "./data/types";
 import { createDefaultData } from "./data/defaults";
 import { SessionManager } from "./core/session-manager";
 import { ReminderManager } from "./core/reminder-manager";
-import { DESKQUEST_VIEW_TYPE, DeskQuestDashboardView } from "./views/dashboard";
-import { DeskQuestSettingTab } from "./views/settings-tab";
+import { REGEN_VIEW_TYPE, RegenDashboardView } from "./views/dashboard";
+import { RegenSettingTab } from "./views/settings-tab";
 import { getSkin } from "./skins/definitions";
 import { statusText } from "./components/hud";
 import { OnboardingModal } from "./views/onboarding-modal";
 import { ImportModal } from "./views/import-modal";
 import { ConfirmModal } from "./views/confirm-modal";
 
-export default class DeskQuestPlugin extends Plugin {
-  data: DeskQuestData = createDefaultData();
-  private store!: DeskQuestStore;
+export default class RegenPlugin extends Plugin {
+  data: RegenData = createDefaultData();
+  private store!: RegenStore;
   private sessions!: SessionManager;
   private reminders!: ReminderManager;
   private statusBarEl!: HTMLElement;
   private unsubscribeSession?: () => void;
 
   async onload(): Promise<void> {
-    this.store = new DeskQuestStore(this);
+    this.store = new RegenStore(this);
     this.data = await this.store.load();
     this.sessions = new SessionManager(this.data, () => this.requestSave());
-    this.reminders = new ReminderManager(this.data, () => this.refreshAndSave());
+    this.reminders = new ReminderManager(this.data, () => this.refreshAndSave(), (message) => new Notice(message));
 
-    this.registerView(DESKQUEST_VIEW_TYPE, (leaf: WorkspaceLeaf) => new DeskQuestDashboardView(leaf, this.data, this.sessions, this.reminders));
+    this.registerView(REGEN_VIEW_TYPE, (leaf: WorkspaceLeaf) => new RegenDashboardView(leaf, this.data, this.sessions, this.reminders));
     this.statusBarEl = this.addStatusBarItem();
-    this.statusBarEl.addClass("deskquest-statusbar");
+    this.statusBarEl.addClass("regen-statusbar");
     this.statusBarEl.onClickEvent(() => void this.openDashboard());
 
-    this.addSettingTab(new DeskQuestSettingTab(this.app, this));
+    this.addSettingTab(new RegenSettingTab(this.app, this));
     this.addCommands();
     this.registerActivityListeners();
     this.applySkin();
@@ -47,7 +47,7 @@ export default class DeskQuestPlugin extends Plugin {
       this.app.workspace.onLayoutReady(() => new OnboardingModal(this).open());
     }
 
-    console.log("DeskQuest loaded.");
+    console.log("Regen loaded.");
   }
 
   async onunload(): Promise<void> {
@@ -69,7 +69,7 @@ export default class DeskQuestPlugin extends Plugin {
     await this.store.flush(this.data);
   }
 
-  async replaceData(nextData: DeskQuestData): Promise<void> {
+  async replaceData(nextData: RegenData): Promise<void> {
     Object.keys(this.data).forEach((key) => delete (this.data as unknown as Record<string, unknown>)[key]);
     Object.assign(this.data, nextData);
     this.applySkin();
@@ -79,9 +79,9 @@ export default class DeskQuestPlugin extends Plugin {
 
   refreshUi(): void {
     this.statusBarEl.setText(statusText(this.data));
-    this.app.workspace.getLeavesOfType(DESKQUEST_VIEW_TYPE).forEach((leaf) => {
+    this.app.workspace.getLeavesOfType(REGEN_VIEW_TYPE).forEach((leaf) => {
       const view = leaf.view;
-      if (view instanceof DeskQuestDashboardView) {
+      if (view instanceof RegenDashboardView) {
         view.render();
       }
     });
@@ -89,25 +89,25 @@ export default class DeskQuestPlugin extends Plugin {
 
   applySkin(): void {
     const skin = getSkin(this.data.settings.skin);
-    document.body.style.setProperty("--deskquest-accent", skin.accent);
-    document.body.style.setProperty("--deskquest-background", skin.background);
-    document.body.style.setProperty("--deskquest-border", skin.border);
-    document.body.style.setProperty("--deskquest-meter", skin.meter);
+    document.body.style.setProperty("--regen-accent", skin.accent);
+    document.body.style.setProperty("--regen-background", skin.background);
+    document.body.style.setProperty("--regen-border", skin.border);
+    document.body.style.setProperty("--regen-meter", skin.meter);
   }
 
   async openDashboard(): Promise<void> {
-    let leaf = this.app.workspace.getLeavesOfType(DESKQUEST_VIEW_TYPE)[0];
+    let leaf = this.app.workspace.getLeavesOfType(REGEN_VIEW_TYPE)[0];
     if (!leaf) {
       leaf = this.app.workspace.getRightLeaf(false) ?? this.app.workspace.getLeaf(true);
-      await leaf.setViewState({ type: DESKQUEST_VIEW_TYPE, active: true });
+      await leaf.setViewState({ type: REGEN_VIEW_TYPE, active: true });
     }
     this.app.workspace.revealLeaf(leaf);
   }
 
   private addCommands(): void {
     this.addCommand({
-      id: "open-deskquest",
-      name: "Open DeskQuest",
+      id: "open-regen",
+      name: "Open Regen",
       callback: () => void this.openDashboard()
     });
     this.addCommand({
@@ -197,13 +197,13 @@ export default class DeskQuestPlugin extends Plugin {
       callback: () => this.reminders.dismiss()
     });
     this.addCommand({
-      id: "pause-deskquest",
-      name: "Pause DeskQuest",
+      id: "pause-regen",
+      name: "Pause Regen",
       callback: () => this.sessions.pause()
     });
     this.addCommand({
-      id: "resume-deskquest",
-      name: "Resume DeskQuest",
+      id: "resume-regen",
+      name: "Resume Regen",
       callback: () => this.sessions.resume()
     });
     this.addCommand({
@@ -238,17 +238,17 @@ export default class DeskQuestPlugin extends Plugin {
     });
     this.addCommand({
       id: "export-json",
-      name: "Export DeskQuest Data as JSON",
+      name: "Export Regen Data as JSON",
       callback: () => void this.exportJson()
     });
     this.addCommand({
       id: "export-csv",
-      name: "Export DeskQuest Stats as CSV",
+      name: "Export Regen Stats as CSV",
       callback: () => void this.exportCsv()
     });
     this.addCommand({
       id: "import-json",
-      name: "Import DeskQuest Data from JSON",
+      name: "Import Regen Data from JSON",
       callback: () => new ImportModal(this).open()
     });
     this.addCommand({
@@ -283,9 +283,9 @@ export default class DeskQuestPlugin extends Plugin {
   }
 
   private async exportJson(): Promise<void> {
-    const path = await this.getAvailablePath(`deskquest-export-${new Date().toISOString().slice(0, 10)}.json`);
+    const path = await this.getAvailablePath(`regen-export-${new Date().toISOString().slice(0, 10)}.json`);
     await this.app.vault.create(path, JSON.stringify(this.data, null, 2));
-    new Notice(`DeskQuest JSON export created: ${path}`);
+    new Notice(`Regen JSON export created: ${path}`);
   }
 
   private async exportCsv(): Promise<void> {
@@ -301,9 +301,9 @@ export default class DeskQuestPlugin extends Plugin {
       stat.eyeBreaks,
       stat.workdayScore
     ].join(","));
-    const path = await this.getAvailablePath(`deskquest-stats-${new Date().toISOString().slice(0, 10)}.csv`);
+    const path = await this.getAvailablePath(`regen-stats-${new Date().toISOString().slice(0, 10)}.csv`);
     await this.app.vault.create(path, [header, ...rows].join("\n"));
-    new Notice(`DeskQuest CSV export created: ${path}`);
+    new Notice(`Regen CSV export created: ${path}`);
   }
 
   private async getAvailablePath(basePath: string): Promise<string> {
@@ -322,7 +322,7 @@ export default class DeskQuestPlugin extends Plugin {
     new ConfirmModal(
       this,
       "Reset Today",
-      "This clears today's DeskQuest statistics and active reminder. Game progress and settings stay intact.",
+      "This clears today's Regen statistics and active reminder. Game progress and settings stay intact.",
       "Reset Today",
       async () => {
         delete this.data.stats[new Date().toISOString().slice(0, 10)];
@@ -351,7 +351,7 @@ export default class DeskQuestPlugin extends Plugin {
     new ConfirmModal(
       this,
       "Reset Everything",
-      "This resets all DeskQuest settings, progress, reminders and statistics.",
+      "This resets all Regen settings, progress, reminders and statistics.",
       "Reset Everything",
       async () => {
         await this.replaceData(createDefaultData());

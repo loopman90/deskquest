@@ -1,26 +1,26 @@
 import { App, PluginSettingTab, Setting } from "obsidian";
-import DeskQuestPlugin from "../main";
+import RegenPlugin from "../main";
 import { SKINS } from "../skins/definitions";
 import { DifficultyMode } from "../data/types";
 
-export class DeskQuestSettingTab extends PluginSettingTab {
-  constructor(app: App, private readonly plugin: DeskQuestPlugin) {
+export class RegenSettingTab extends PluginSettingTab {
+  constructor(app: App, private readonly plugin: RegenPlugin) {
     super(app, plugin);
   }
 
   display(): void {
     const { containerEl } = this;
     containerEl.empty();
-    containerEl.addClass("deskquest-settings");
+    containerEl.addClass("regen-settings");
 
-    containerEl.createEl("h2", { text: "DeskQuest Settings" });
+    containerEl.createEl("h2", { text: "Regen Settings" });
     containerEl.createEl("p", {
-      text: "All values are local game indicators. DeskQuest never blocks work and does not provide medical advice.",
+      text: "All values are local game indicators. Regen never blocks work and does not provide medical advice.",
       cls: "setting-item-description"
     });
 
     new Setting(containerEl)
-      .setName("Enable DeskQuest")
+      .setName("Enable Regen")
       .setDesc("Turns the HUD, commands and local tracking on or off.")
       .addToggle((toggle) => toggle
         .setValue(this.plugin.data.settings.enabled)
@@ -31,7 +31,7 @@ export class DeskQuestSettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName("Track activity outside Obsidian")
-      .setDesc("Default off. DeskQuest will never read content from other apps; unsupported platforms fall back to Obsidian activity.")
+      .setDesc("Default off. Regen will never read content from other apps; unsupported platforms fall back to Obsidian activity.")
       .addToggle((toggle) => toggle
         .setValue(this.plugin.data.settings.trackOutsideObsidian)
         .onChange(async (value) => {
@@ -76,7 +76,7 @@ export class DeskQuestSettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName("All reminders")
-      .setDesc("Turns DeskQuest reminder generation on or off. Manual commands keep working.")
+      .setDesc("Turns Regen reminder generation on or off. Manual commands keep working.")
       .addToggle((toggle) => toggle
         .setValue(this.plugin.data.settings.remindersEnabled)
         .onChange(async (value) => {
@@ -148,7 +148,7 @@ export class DeskQuestSettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName("Recovery prompt")
-      .setDesc("Minutes of continuous active work before DeskQuest suggests recovery.")
+      .setDesc("Minutes of continuous active work before Regen suggests recovery.")
       .addSlider((slider) => slider
         .setLimits(25, 120, 5)
         .setDynamicTooltip()

@@ -1,6 +1,22 @@
 # Changelog
 
-All notable changes to DeskQuest will be documented in this file.
+All notable changes to Regen will be documented in this file.
+
+## [0.3.0] - 2026-09-06
+
+### Changed
+
+- Renamed the plugin from DeskQuest to Regen.
+- Changed plugin id and package name to `regen`.
+- Updated documentation and GitHub links for `loopman90/regen`.
+
+### Added
+
+- Node built-in test suite for game engines and reminder due behavior.
+- Release workflow now runs tests before publishing plugin assets.
+- Daily quest rollover for long-running Obsidian sessions.
+- Latest release installation instructions.
+- BRAT installation instructions.
 
 ## [0.2.0] - 2026-09-06
 

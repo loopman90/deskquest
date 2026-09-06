@@ -1,56 +1,56 @@
 :root {
-  --deskquest-accent: #8b5cf6;
-  --deskquest-background: var(--background-primary);
-  --deskquest-border: var(--background-modifier-border);
-  --deskquest-meter: #8b5cf6;
+  --regen-accent: #8b5cf6;
+  --regen-background: var(--background-primary);
+  --regen-border: var(--background-modifier-border);
+  --regen-meter: #8b5cf6;
 }
 
-.deskquest-statusbar {
+.regen-statusbar {
   cursor: pointer;
   color: var(--text-muted);
 }
 
-.deskquest-view {
+.regen-view {
   padding: 20px;
 }
 
-.deskquest-dashboard-header {
+.regen-dashboard-header {
   display: flex;
   flex-direction: column;
   gap: 2px;
   margin-bottom: 16px;
 }
 
-.deskquest-dashboard-header h1 {
+.regen-dashboard-header h1 {
   margin: 0;
   font-size: 28px;
   letter-spacing: 0;
 }
 
-.deskquest-dashboard-header p {
+.regen-dashboard-header p {
   margin: 0;
   color: var(--text-muted);
 }
 
-.deskquest-hud {
+.regen-hud {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 8px;
   padding: 12px;
-  border: 1px solid var(--deskquest-border);
+  border: 1px solid var(--regen-border);
   border-radius: 8px;
-  background: var(--deskquest-background);
+  background: var(--regen-background);
 }
 
-.deskquest-hud-compact {
+.regen-hud-compact {
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }
 
-.deskquest-meter {
+.regen-meter {
   min-width: 0;
 }
 
-.deskquest-meter-head {
+.regen-meter-head {
   display: grid;
   grid-template-columns: 20px 1fr auto;
   gap: 6px;
@@ -59,45 +59,45 @@
   font-size: 12px;
 }
 
-.deskquest-meter-icon svg {
+.regen-meter-icon svg {
   width: 16px;
   height: 16px;
-  color: var(--deskquest-accent);
+  color: var(--regen-accent);
 }
 
-.deskquest-meter-label {
+.regen-meter-label {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.deskquest-meter-value {
+.regen-meter-value {
   font-variant-numeric: tabular-nums;
   color: var(--text-muted);
 }
 
-.deskquest-meter-track {
+.regen-meter-track {
   height: 8px;
   overflow: hidden;
   border-radius: 4px;
   background: var(--background-modifier-border);
 }
 
-.deskquest-meter-fill {
+.regen-meter-fill {
   height: 100%;
   width: 0;
   border-radius: inherit;
-  background: var(--deskquest-meter);
+  background: var(--regen-meter);
   transition: width 160ms ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .deskquest-meter-fill {
+  .regen-meter-fill {
     transition: none;
   }
 }
 
-.deskquest-xp {
+.regen-xp {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
@@ -106,58 +106,58 @@
   font-size: 12px;
 }
 
-.deskquest-actions {
+.regen-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin: 14px 0 18px;
 }
 
-.deskquest-actions-tight {
+.regen-actions-tight {
   margin: 10px 0 0;
 }
 
-.deskquest-grid {
+.regen-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 12px;
 }
 
-.deskquest-panel {
-  border: 1px solid var(--deskquest-border);
+.regen-panel {
+  border: 1px solid var(--regen-border);
   border-radius: 8px;
   padding: 14px;
   background: var(--background-primary);
 }
 
-.deskquest-panel h2 {
+.regen-panel h2 {
   margin: 0 0 10px;
   font-size: 16px;
   letter-spacing: 0;
 }
 
-.deskquest-panel p {
+.regen-panel p {
   margin: 6px 0;
 }
 
-.deskquest-panel-muted {
+.regen-panel-muted {
   color: var(--text-muted);
 }
 
-.deskquest-reminder {
-  border-color: var(--deskquest-accent);
+.regen-reminder {
+  border-color: var(--regen-accent);
 }
 
-.deskquest-reminder-prompt {
-  box-shadow: inset 3px 0 0 var(--deskquest-accent);
+.regen-reminder-prompt {
+  box-shadow: inset 3px 0 0 var(--regen-accent);
 }
 
-.deskquest-nudge {
-  color: var(--deskquest-accent);
+.regen-nudge {
+  color: var(--regen-accent);
   font-weight: 600;
 }
 
-.deskquest-quest {
+.regen-quest {
   display: grid;
   grid-template-columns: auto 1fr auto;
   gap: 10px;
@@ -166,35 +166,35 @@
   border-top: 1px solid var(--background-modifier-border);
 }
 
-.deskquest-quest:first-of-type {
+.regen-quest:first-of-type {
   border-top: 0;
 }
 
-.deskquest-quest p {
+.regen-quest p {
   margin: 2px 0 0;
   color: var(--text-muted);
   font-size: 12px;
 }
 
-.deskquest-done,
-.deskquest-open {
+.regen-done,
+.regen-open {
   min-width: 44px;
   font-size: 11px;
   color: var(--text-muted);
 }
 
-.deskquest-done {
+.regen-done {
   color: var(--text-success);
 }
 
-.deskquest-score {
+.regen-score {
   font-size: 44px;
   line-height: 1;
   font-weight: 700;
-  color: var(--deskquest-accent);
+  color: var(--regen-accent);
 }
 
-.deskquest-history-row {
+.regen-history-row {
   display: grid;
   grid-template-columns: 1fr auto auto;
   gap: 10px;
@@ -204,26 +204,26 @@
   font-size: 12px;
 }
 
-.deskquest-history-row:first-of-type {
+.regen-history-row:first-of-type {
   border-top: 0;
 }
 
-.deskquest-settings .setting-item-description {
+.regen-settings .setting-item-description {
   max-width: 720px;
 }
 
-.deskquest-onboarding,
-.deskquest-import-modal {
+.regen-onboarding,
+.regen-import-modal {
   display: grid;
   gap: 12px;
 }
 
-.deskquest-onboarding h2,
-.deskquest-import-modal h2 {
+.regen-onboarding h2,
+.regen-import-modal h2 {
   margin: 0;
 }
 
-.deskquest-modal-actions {
+.regen-modal-actions {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
@@ -231,7 +231,7 @@
   margin-top: 12px;
 }
 
-.deskquest-import-box {
+.regen-import-box {
   width: 100%;
   min-height: 220px;
   resize: vertical;

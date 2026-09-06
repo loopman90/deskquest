@@ -1,11 +1,12 @@
 import { Notice } from "obsidian";
-import { DeskQuestData, WorkSession } from "../data/types";
+import { RegenData, WorkSession } from "../data/types";
 import { adjustHealthForSession, recoverHealth } from "../game/health-engine";
 import { drainStamina, recoverStamina } from "../game/stamina-engine";
 import { awardXp } from "../game/xp-engine";
 import { calculateWorkdayScore } from "../game/score-engine";
 import { makeId, todayKey } from "../utils/dates";
 import { clamp } from "../utils/number";
+import { createDailyQuests } from "../data/defaults";
 
 const TICK_MS = 5000;
 const SLEEP_GAP_MS = 60000;
@@ -27,9 +28,10 @@ export class SessionManager {
   private lastActivity = Date.now();
   private subscribers: SessionChangeHandler[] = [];
 
-  constructor(private readonly data: DeskQuestData, private readonly save: () => void) {}
+  constructor(private readonly data: RegenData, private readonly save: () => void) {}
 
   start(): void {
+    this.ensureDailyRollover();
     this.registerActivity();
     if (!this.data.activeSession || this.data.activeSession.status === "ended") {
       this.data.activeSession = createSession();
@@ -63,7 +65,7 @@ export class SessionManager {
     this.updateDailyScore();
     this.grantXp(10);
     this.data.bars.health = recoverHealth(this.data.bars.health, 2);
-    new Notice("DeskQuest workday ended. Progress saved.");
+    new Notice("Regen workday ended. Progress saved.");
     this.changed();
   }
 
@@ -87,6 +89,7 @@ export class SessionManager {
   }
 
   registerDrink(): void {
+    this.ensureDailyRollover();
     const now = Date.now();
     if (this.data.lastHydrationAt && now - this.data.lastHydrationAt < 20 * 60000) {
       new Notice("Hydration check is cooling down to prevent XP farming.");
@@ -102,6 +105,7 @@ export class SessionManager {
   }
 
   registerMeal(kind: "breakfast" | "lunch" | "dinner" | "snack"): void {
+    this.ensureDailyRollover();
     const now = Date.now();
     const lastMealAt = this.data.lastMealAt ?? {};
     const last = lastMealAt[kind];
@@ -120,6 +124,7 @@ export class SessionManager {
   }
 
   completeMovement(): void {
+    this.ensureDailyRollover();
     this.data.lastMovementAt = Date.now();
     this.data.bars.health = recoverHealth(this.data.bars.health, 5);
     this.data.bars.stamina = recoverStamina(this.data.bars.stamina, 2);
@@ -131,6 +136,7 @@ export class SessionManager {
   }
 
   registerEyeBreak(): void {
+    this.ensureDailyRollover();
     this.data.lastEyeBreakAt = Date.now();
     this.incrementStat("eyeBreaks", 1);
     this.grantXp(2);
@@ -227,6 +233,7 @@ export class SessionManager {
   }
 
   private ensureStats(): void {
+    this.ensureDailyRollover();
     const key = todayKey();
     if (this.data.stats[key]) return;
     this.data.stats[key] = {
@@ -257,6 +264,14 @@ export class SessionManager {
     const safeAmount = Math.max(0, Math.floor(amount));
     this.data.xp = awardXp(this.data.xp, safeAmount);
     this.incrementStat("xpEarned", safeAmount);
+  }
+
+  private ensureDailyRollover(): void {
+    const key = todayKey();
+    if (this.data.lastQuestDate === key) return;
+    this.data.dailyQuests = createDailyQuests();
+    this.data.activeReminder = undefined;
+    this.data.lastQuestDate = key;
   }
 
   private getTodayStats() {

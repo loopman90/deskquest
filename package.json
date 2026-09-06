@@ -1,16 +1,17 @@
 {
-  "name": "deskquest",
-  "version": "0.2.0",
+  "name": "regen",
+  "version": "0.3.0",
   "description": "A local, gamified work-rhythm and wellbeing plugin for Obsidian.",
   "main": "main.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/loopman90/deskquest.git"
+    "url": "https://github.com/loopman90/regen.git"
   },
   "scripts": {
     "dev": "node esbuild.config.mjs",
     "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
     "check-version": "node scripts/check-version.mjs",
+    "test": "tsc -p tsconfig.test.json && node --test .tmp-tests/tests/*.test.js",
     "typecheck": "tsc -noEmit -skipLibCheck"
   },
   "keywords": [
@@ -20,7 +21,7 @@
     "wellbeing",
     "gamification"
   ],
-  "author": "DeskQuest",
+  "author": "Regen",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.11.30",

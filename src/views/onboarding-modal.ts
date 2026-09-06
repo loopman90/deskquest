@@ -1,12 +1,12 @@
 import { ButtonComponent, Modal, Setting } from "obsidian";
-import DeskQuestPlugin from "../main";
+import RegenPlugin from "../main";
 import { SKINS } from "../skins/definitions";
 import { DifficultyMode } from "../data/types";
 
 export class OnboardingModal extends Modal {
   private page = 0;
 
-  constructor(private readonly plugin: DeskQuestPlugin) {
+  constructor(private readonly plugin: RegenPlugin) {
     super(plugin.app);
   }
 
@@ -17,7 +17,7 @@ export class OnboardingModal extends Modal {
   private render(): void {
     const { contentEl } = this;
     contentEl.empty();
-    contentEl.addClass("deskquest-onboarding");
+    contentEl.addClass("regen-onboarding");
 
     const pages = [
       () => this.welcome(contentEl),
@@ -29,7 +29,7 @@ export class OnboardingModal extends Modal {
 
     pages[this.page]();
 
-    const nav = contentEl.createDiv({ cls: "deskquest-modal-actions" });
+    const nav = contentEl.createDiv({ cls: "regen-modal-actions" });
     new ButtonComponent(nav)
       .setButtonText(this.page === 0 ? "Skip" : "Back")
       .onClick(() => {
@@ -54,8 +54,8 @@ export class OnboardingModal extends Modal {
   }
 
   private welcome(parent: HTMLElement): void {
-    parent.createEl("h2", { text: "Welcome to DeskQuest" });
-    parent.createEl("p", { text: "Turn your work rhythm into a game. DeskQuest rewards focus plus recovery, not endless work." });
+    parent.createEl("h2", { text: "Welcome to Regen" });
+    parent.createEl("p", { text: "Turn your work rhythm into a game. Regen rewards focus plus recovery, not endless work." });
   }
 
   private difficulty(parent: HTMLElement): void {
@@ -107,7 +107,7 @@ export class OnboardingModal extends Modal {
 
   private privacy(parent: HTMLElement): void {
     parent.createEl("h2", { text: "Privacy" });
-    parent.createEl("p", { text: "DeskQuest stores data locally in Obsidian plugin data. Tracking outside Obsidian is off by default and the current plugin does not read other app content." });
+    parent.createEl("p", { text: "Regen stores data locally in Obsidian plugin data. Tracking outside Obsidian is off by default and the current plugin does not read other app content." });
   }
 
   private async finish(): Promise<void> {
