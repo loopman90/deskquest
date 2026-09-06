@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DeskQuest</title>
+    <meta name="description" content="DeskQuest is a local gamified work-rhythm HUD for Obsidian.">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="DeskQuest home">DeskQuest</a>
+      <nav aria-label="Main navigation">
+        <a href="#features">Features</a>
+        <a href="#install">Install</a>
+        <a href="#privacy">Privacy</a>
+        <a href="https://github.com/loopman90/deskquest">GitHub</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Obsidian Community Plugin</p>
+          <h1>DeskQuest</h1>
+          <p class="tagline">A videogame HUD for a healthier work rhythm.</p>
+          <p class="promise">Work. Recover. Continue.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#install">Install for testing</a>
+            <a class="button" href="#features">See features</a>
+          </div>
+        </div>
+        <div class="hud-demo" aria-label="DeskQuest HUD preview">
+          <div class="hud-row">
+            <span>HEALTH</span>
+            <strong>82</strong>
+            <div class="bar"><i style="width:82%"></i></div>
+          </div>
+          <div class="hud-row">
+            <span>STAMINA</span>
+            <strong>74</strong>
+            <div class="bar"><i style="width:74%"></i></div>
+          </div>
+          <div class="hud-row">
+            <span>HYDRATION</span>
+            <strong>52</strong>
+            <div class="bar"><i style="width:52%"></i></div>
+          </div>
+          <div class="hud-row">
+            <span>FOOD</span>
+            <strong>61</strong>
+            <div class="bar"><i style="width:61%"></i></div>
+          </div>
+          <div class="quest">
+            <span>Next Quest</span>
+            <strong>Recovery Break</strong>
+            <p>Take five minutes away from the desk.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="section">
+        <div class="section-heading">
+          <h2>Built For Sustainable Focus</h2>
+          <p>DeskQuest rewards balanced workdays, not endless sessions.</p>
+        </div>
+        <div class="feature-grid">
+          <article>
+            <h3>Four Game Bars</h3>
+            <p>Health, Stamina, Hydration and Food stay separate and easy to scan.</p>
+          </article>
+          <article>
+            <h3>Recovery First</h3>
+            <p>Breaks, movement and eye rests are part of the game loop.</p>
+          </article>
+          <article>
+            <h3>Local By Design</h3>
+            <p>No account, no backend, no telemetry by default and no internet requirement.</p>
+          </article>
+          <article>
+            <h3>Idiot Proof Controls</h3>
+            <p>Start work, take a break, register a drink or end the day from one dashboard.</p>
+          </article>
+          <article>
+            <h3>Skins</h3>
+            <p>Twenty-five included skins alter the presentation layer without touching logic.</p>
+          </article>
+          <article>
+            <h3>Export</h3>
+            <p>Keep your local data portable with JSON and CSV export commands.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="install" class="section split">
+        <div>
+          <h2>Install For Testing</h2>
+          <p>Build the plugin, then place the generated plugin files in your Obsidian vault.</p>
+        </div>
+        <ol class="steps">
+          <li><code>npm install</code></li>
+          <li><code>npm run build</code></li>
+          <li>Copy <code>main.js</code>, <code>manifest.json</code> and <code>styles.css</code> to <code>.obsidian/plugins/deskquest/</code></li>
+          <li>Enable DeskQuest in Obsidian Community plugins.</li>
+        </ol>
+      </section>
+
+      <section id="privacy" class="section privacy">
+        <h2>Privacy And Safety</h2>
+        <p>DeskQuest is a gamified productivity and work-rhythm tool. Health, Stamina, Hydration and Food are fictional game indicators based on configured routines and activity. DeskQuest does not provide medical advice.</p>
+      </section>
+    </main>
+  </body>
+</html>

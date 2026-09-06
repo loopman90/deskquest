@@ -1,0 +1,31 @@
+{
+  "name": "deskquest",
+  "version": "0.1.0",
+  "description": "A local, gamified work-rhythm and wellbeing plugin for Obsidian.",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/loopman90/deskquest.git"
+  },
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+    "typecheck": "tsc -noEmit -skipLibCheck"
+  },
+  "keywords": [
+    "obsidian",
+    "obsidian-plugin",
+    "productivity",
+    "wellbeing",
+    "gamification"
+  ],
+  "author": "DeskQuest",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "builtin-modules": "^3.3.0",
+    "esbuild": "^0.28.2",
+    "obsidian": "^1.5.12",
+    "typescript": "^5.4.5"
+  }
+}

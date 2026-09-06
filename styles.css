@@ -1,0 +1,187 @@
+:root {
+  --deskquest-accent: #8b5cf6;
+  --deskquest-background: var(--background-primary);
+  --deskquest-border: var(--background-modifier-border);
+  --deskquest-meter: #8b5cf6;
+}
+
+.deskquest-statusbar {
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.deskquest-view {
+  padding: 20px;
+}
+
+.deskquest-dashboard-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 16px;
+}
+
+.deskquest-dashboard-header h1 {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: 0;
+}
+
+.deskquest-dashboard-header p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.deskquest-hud {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--deskquest-border);
+  border-radius: 8px;
+  background: var(--deskquest-background);
+}
+
+.deskquest-hud-compact {
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.deskquest-meter {
+  min-width: 0;
+}
+
+.deskquest-meter-head {
+  display: grid;
+  grid-template-columns: 20px 1fr auto;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+.deskquest-meter-icon svg {
+  width: 16px;
+  height: 16px;
+  color: var(--deskquest-accent);
+}
+
+.deskquest-meter-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.deskquest-meter-value {
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+
+.deskquest-meter-track {
+  height: 8px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--background-modifier-border);
+}
+
+.deskquest-meter-fill {
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: var(--deskquest-meter);
+  transition: width 160ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deskquest-meter-fill {
+    transition: none;
+  }
+}
+
+.deskquest-xp {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.deskquest-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0 18px;
+}
+
+.deskquest-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.deskquest-panel {
+  border: 1px solid var(--deskquest-border);
+  border-radius: 8px;
+  padding: 14px;
+  background: var(--background-primary);
+}
+
+.deskquest-panel h2 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  letter-spacing: 0;
+}
+
+.deskquest-panel p {
+  margin: 6px 0;
+}
+
+.deskquest-panel-muted {
+  color: var(--text-muted);
+}
+
+.deskquest-nudge {
+  color: var(--deskquest-accent);
+  font-weight: 600;
+}
+
+.deskquest-quest {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 0;
+  border-top: 1px solid var(--background-modifier-border);
+}
+
+.deskquest-quest:first-of-type {
+  border-top: 0;
+}
+
+.deskquest-quest p {
+  margin: 2px 0 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.deskquest-done,
+.deskquest-open {
+  min-width: 44px;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.deskquest-done {
+  color: var(--text-success);
+}
+
+.deskquest-score {
+  font-size: 44px;
+  line-height: 1;
+  font-weight: 700;
+  color: var(--deskquest-accent);
+}
+
+.deskquest-settings .setting-item-description {
+  max-width: 720px;
+}
