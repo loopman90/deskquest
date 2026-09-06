@@ -21,6 +21,14 @@ export const DEFAULT_SETTINGS: DeskQuestSettings = {
   eyeBreaksEnabled: true,
   animationsEnabled: true,
   soundsEnabled: false,
+  randomEventsEnabled: false,
+  remindersEnabled: true,
+  microbreakIntervalMinutes: 30,
+  movementQuestIntervalMinutes: 60,
+  eyeBreakIntervalMinutes: 20,
+  recoveryPromptMinutes: 60,
+  strongRecoveryNudgeMinutes: 75,
+  quietHudOnly: false,
   patternRecognition: false,
   dailyNotesIntegration: false,
   tasksIntegration: false,
@@ -97,6 +105,7 @@ export function createDefaultData(): DeskQuestData {
     ],
     stats: {},
     completedQuestIds: [],
+    reminderHistory: [],
     onboarded: false,
     schemaVersion: 1
   };

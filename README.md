@@ -21,6 +21,9 @@ DeskQuest helps you balance focus sessions with recovery, hydration, meals, move
 - Settings tab with safe defaults
 - 25 presentation-only skins
 - JSON and CSV export commands
+- First-run onboarding
+- Snoozeable reminders
+- JSON import and reset commands
 - Dark mode, light mode and reduced-motion friendly CSS
 - Local-only data storage
 
@@ -137,7 +140,7 @@ For every release, update these files to the same version:
 Then create and push a matching tag:
 
 ```bash
-git tag v0.1.0
+git tag v0.2.0
 git push origin main --tags
 ```
 

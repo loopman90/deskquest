@@ -2,6 +2,20 @@
 
 All notable changes to DeskQuest will be documented in this file.
 
+## [0.2.0] - 2026-09-06
+
+### Added
+
+- First-run onboarding flow.
+- Active reminder model with reminder history.
+- Snooze and dismiss reminder commands.
+- Recovery, hydration, movement and eye-break reminder evaluation.
+- Import JSON command with validation and migration-friendly defaults.
+- Reset Today, Reset Game Progress and Reset Everything commands.
+- Daily history panel in the dashboard.
+- Configurable reminder intervals for movement, eyes and recovery prompts.
+- Safer export filenames when a file already exists.
+
 ## [0.1.0] - 2026-09-06
 
 ### Added

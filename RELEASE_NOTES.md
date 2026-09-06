@@ -1,6 +1,6 @@
-# DeskQuest v0.1.0
+# DeskQuest v0.2.0
 
-Initial public starter release.
+Expanded public starter release.
 
 ## Included
 
@@ -16,6 +16,13 @@ Initial public starter release.
 - 25 presentation-only skins
 - JSON and CSV export commands
 - GitHub Pages landing site
+- First-run onboarding
+- Active reminder state with snooze and dismiss actions
+- Recovery, hydration, movement and eye-break reminder evaluation
+- Import JSON command with validation
+- Reset Today, Reset Game Progress and Reset Everything commands
+- Safer export filenames
+- Daily history panel
 
 ## Safety
 

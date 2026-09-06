@@ -73,6 +73,10 @@ export class SessionManager {
     if (session) {
       session.breakMs += breakMs;
       session.status = "paused";
+      if (session.activeMs > 0 && minutes >= 5) {
+        this.completeQuestById("daily-balanced-session");
+      }
+      session.longestContinuousMs = 0;
     }
     this.data.bars.stamina = recoverStamina(this.data.bars.stamina, minutes);
     this.data.bars.health = recoverHealth(this.data.bars.health, health);
@@ -116,6 +120,7 @@ export class SessionManager {
   }
 
   completeMovement(): void {
+    this.data.lastMovementAt = Date.now();
     this.data.bars.health = recoverHealth(this.data.bars.health, 5);
     this.data.bars.stamina = recoverStamina(this.data.bars.stamina, 2);
     this.grantXp(15);
@@ -126,6 +131,7 @@ export class SessionManager {
   }
 
   registerEyeBreak(): void {
+    this.data.lastEyeBreakAt = Date.now();
     this.incrementStat("eyeBreaks", 1);
     this.grantXp(2);
     new Notice("Eye break logged.");

@@ -3,15 +3,20 @@ import { DeskQuestStore } from "./data/store";
 import { DeskQuestData } from "./data/types";
 import { createDefaultData } from "./data/defaults";
 import { SessionManager } from "./core/session-manager";
+import { ReminderManager } from "./core/reminder-manager";
 import { DESKQUEST_VIEW_TYPE, DeskQuestDashboardView } from "./views/dashboard";
 import { DeskQuestSettingTab } from "./views/settings-tab";
 import { getSkin } from "./skins/definitions";
 import { statusText } from "./components/hud";
+import { OnboardingModal } from "./views/onboarding-modal";
+import { ImportModal } from "./views/import-modal";
+import { ConfirmModal } from "./views/confirm-modal";
 
 export default class DeskQuestPlugin extends Plugin {
   data: DeskQuestData = createDefaultData();
   private store!: DeskQuestStore;
   private sessions!: SessionManager;
+  private reminders!: ReminderManager;
   private statusBarEl!: HTMLElement;
   private unsubscribeSession?: () => void;
 
@@ -19,8 +24,9 @@ export default class DeskQuestPlugin extends Plugin {
     this.store = new DeskQuestStore(this);
     this.data = await this.store.load();
     this.sessions = new SessionManager(this.data, () => this.requestSave());
+    this.reminders = new ReminderManager(this.data, () => this.refreshAndSave());
 
-    this.registerView(DESKQUEST_VIEW_TYPE, (leaf: WorkspaceLeaf) => new DeskQuestDashboardView(leaf, this.data, this.sessions));
+    this.registerView(DESKQUEST_VIEW_TYPE, (leaf: WorkspaceLeaf) => new DeskQuestDashboardView(leaf, this.data, this.sessions, this.reminders));
     this.statusBarEl = this.addStatusBarItem();
     this.statusBarEl.addClass("deskquest-statusbar");
     this.statusBarEl.onClickEvent(() => void this.openDashboard());
@@ -31,9 +37,14 @@ export default class DeskQuestPlugin extends Plugin {
     this.applySkin();
     this.refreshUi();
     this.unsubscribeSession = this.sessions.subscribe(() => this.refreshUi());
+    this.registerInterval(window.setInterval(() => this.reminders.evaluate(), 10000));
 
     if (this.data.settings.startAutomatically && this.data.settings.enabled) {
       this.sessions.start();
+    }
+
+    if (!this.data.onboarded) {
+      this.app.workspace.onLayoutReady(() => new OnboardingModal(this).open());
     }
 
     console.log("DeskQuest loaded.");
@@ -49,8 +60,21 @@ export default class DeskQuestPlugin extends Plugin {
     this.store.requestSave(this.data);
   }
 
+  refreshAndSave(): void {
+    this.requestSave();
+    this.refreshUi();
+  }
+
   async saveNow(): Promise<void> {
     await this.store.flush(this.data);
+  }
+
+  async replaceData(nextData: DeskQuestData): Promise<void> {
+    Object.keys(this.data).forEach((key) => delete (this.data as unknown as Record<string, unknown>)[key]);
+    Object.assign(this.data, nextData);
+    this.applySkin();
+    await this.saveNow();
+    this.refreshUi();
   }
 
   refreshUi(): void {
@@ -165,7 +189,12 @@ export default class DeskQuestPlugin extends Plugin {
     this.addCommand({
       id: "snooze-current-reminder",
       name: "Snooze Current Reminder",
-      callback: () => new Notice("Reminder snoozed.")
+      callback: () => this.reminders.snooze(10)
+    });
+    this.addCommand({
+      id: "dismiss-current-reminder",
+      name: "Dismiss Current Reminder",
+      callback: () => this.reminders.dismiss()
     });
     this.addCommand({
       id: "pause-deskquest",
@@ -217,6 +246,31 @@ export default class DeskQuestPlugin extends Plugin {
       name: "Export DeskQuest Stats as CSV",
       callback: () => void this.exportCsv()
     });
+    this.addCommand({
+      id: "import-json",
+      name: "Import DeskQuest Data from JSON",
+      callback: () => new ImportModal(this).open()
+    });
+    this.addCommand({
+      id: "reset-today",
+      name: "Reset Today",
+      callback: () => this.confirmResetToday()
+    });
+    this.addCommand({
+      id: "reset-game-progress",
+      name: "Reset Game Progress",
+      callback: () => this.confirmResetGameProgress()
+    });
+    this.addCommand({
+      id: "reset-everything",
+      name: "Reset Everything",
+      callback: () => this.confirmResetEverything()
+    });
+    this.addCommand({
+      id: "show-onboarding",
+      name: "Show Onboarding",
+      callback: () => new OnboardingModal(this).open()
+    });
   }
 
   private registerActivityListeners(): void {
@@ -229,7 +283,7 @@ export default class DeskQuestPlugin extends Plugin {
   }
 
   private async exportJson(): Promise<void> {
-    const path = `deskquest-export-${new Date().toISOString().slice(0, 10)}.json`;
+    const path = await this.getAvailablePath(`deskquest-export-${new Date().toISOString().slice(0, 10)}.json`);
     await this.app.vault.create(path, JSON.stringify(this.data, null, 2));
     new Notice(`DeskQuest JSON export created: ${path}`);
   }
@@ -247,8 +301,61 @@ export default class DeskQuestPlugin extends Plugin {
       stat.eyeBreaks,
       stat.workdayScore
     ].join(","));
-    const path = `deskquest-stats-${new Date().toISOString().slice(0, 10)}.csv`;
+    const path = await this.getAvailablePath(`deskquest-stats-${new Date().toISOString().slice(0, 10)}.csv`);
     await this.app.vault.create(path, [header, ...rows].join("\n"));
     new Notice(`DeskQuest CSV export created: ${path}`);
+  }
+
+  private async getAvailablePath(basePath: string): Promise<string> {
+    if (!this.app.vault.getAbstractFileByPath(basePath)) return basePath;
+    const dot = basePath.lastIndexOf(".");
+    const name = dot >= 0 ? basePath.slice(0, dot) : basePath;
+    const ext = dot >= 0 ? basePath.slice(dot) : "";
+    let index = 2;
+    while (this.app.vault.getAbstractFileByPath(`${name}-${index}${ext}`)) {
+      index += 1;
+    }
+    return `${name}-${index}${ext}`;
+  }
+
+  private confirmResetToday(): void {
+    new ConfirmModal(
+      this,
+      "Reset Today",
+      "This clears today's DeskQuest statistics and active reminder. Game progress and settings stay intact.",
+      "Reset Today",
+      async () => {
+        delete this.data.stats[new Date().toISOString().slice(0, 10)];
+        this.data.activeReminder = undefined;
+        await this.saveNow();
+        this.refreshUi();
+      }
+    ).open();
+  }
+
+  private confirmResetGameProgress(): void {
+    new ConfirmModal(
+      this,
+      "Reset Game Progress",
+      "This resets bars, XP, quests, reminders and statistics. Settings stay intact.",
+      "Reset Progress",
+      async () => {
+        const fresh = createDefaultData();
+        fresh.settings = this.data.settings;
+        await this.replaceData(fresh);
+      }
+    ).open();
+  }
+
+  private confirmResetEverything(): void {
+    new ConfirmModal(
+      this,
+      "Reset Everything",
+      "This resets all DeskQuest settings, progress, reminders and statistics.",
+      "Reset Everything",
+      async () => {
+        await this.replaceData(createDefaultData());
+      }
+    ).open();
   }
 }

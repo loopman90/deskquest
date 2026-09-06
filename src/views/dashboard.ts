@@ -3,6 +3,7 @@ import { DeskQuestData } from "../data/types";
 import { DISCLAIMER } from "../data/defaults";
 import { renderHud } from "../components/hud";
 import { SessionManager } from "../core/session-manager";
+import { ReminderManager } from "../core/reminder-manager";
 import { todayKey, msToShort } from "../utils/dates";
 import { workdayScoreLabel } from "../game/score-engine";
 
@@ -12,7 +13,8 @@ export class DeskQuestDashboardView extends ItemView {
   constructor(
     leaf: WorkspaceLeaf,
     private readonly data: DeskQuestData,
-    private readonly sessions: SessionManager
+    private readonly sessions: SessionManager,
+    private readonly reminders: ReminderManager
   ) {
     super(leaf);
   }
@@ -54,10 +56,25 @@ export class DeskQuestDashboardView extends ItemView {
     new ButtonComponent(actions).setButtonText("End Day").setIcon("square").onClick(() => this.sessions.end());
 
     const grid = container.createDiv({ cls: "deskquest-grid" });
+    this.renderReminder(grid);
     this.renderSession(grid);
     this.renderQuests(grid);
     this.renderStats(grid);
+    this.renderHistory(grid);
     this.renderHelp(grid);
+  }
+
+  private renderReminder(parent: HTMLElement): void {
+    const reminder = this.data.activeReminder;
+    if (!reminder) return;
+    const card = parent.createDiv({ cls: `deskquest-panel deskquest-reminder deskquest-reminder-${reminder.level}` });
+    card.createEl("h2", { text: reminder.title });
+    card.createEl("p", { text: reminder.message });
+    card.createEl("p", { text: `Level: ${reminder.level}` });
+    const actions = card.createDiv({ cls: "deskquest-actions deskquest-actions-tight" });
+    new ButtonComponent(actions).setButtonText("Snooze").setIcon("clock").onClick(() => this.reminders.snooze(10));
+    new ButtonComponent(actions).setButtonText("Dismiss").setIcon("x").onClick(() => this.reminders.dismiss());
+    new ButtonComponent(actions).setButtonText("Take Break").setIcon("pause").setCta().onClick(() => this.sessions.startBreak(5, "Recovery break", 10, 2));
   }
 
   private renderSession(parent: HTMLElement): void {
@@ -102,6 +119,23 @@ export class DeskQuestDashboardView extends ItemView {
     card.createEl("p", { text: `Hydration: ${stats?.hydrationCheckins ?? 0}` });
     card.createEl("p", { text: `Movement: ${stats?.movementQuests ?? 0}` });
     card.createEl("p", { text: `Meals: ${stats?.mealCheckins ?? 0}` });
+    card.createEl("p", { text: `XP earned: ${stats?.xpEarned ?? 0}` });
+  }
+
+  private renderHistory(parent: HTMLElement): void {
+    const card = parent.createDiv({ cls: "deskquest-panel" });
+    card.createEl("h2", { text: "History" });
+    const recent = Object.values(this.data.stats).slice(-7).reverse();
+    if (recent.length === 0) {
+      card.createEl("p", { text: "No history yet." });
+      return;
+    }
+    recent.forEach((stat) => {
+      const row = card.createDiv({ cls: "deskquest-history-row" });
+      row.createSpan({ text: stat.date });
+      row.createSpan({ text: `${stat.workdayScore}` });
+      row.createSpan({ text: msToShort(stat.activeWorkMs) });
+    });
   }
 
   private renderHelp(parent: HTMLElement): void {

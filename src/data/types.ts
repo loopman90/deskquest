@@ -46,6 +46,17 @@ export interface Quest {
   rewardStamina?: number;
 }
 
+export interface ReminderState {
+  id: string;
+  title: string;
+  message: string;
+  level: ReminderLevel;
+  category: "stamina" | "hydration" | "food" | "movement" | "eyes" | "recovery";
+  createdAt: number;
+  snoozedUntil?: number;
+  snoozeCount: number;
+}
+
 export interface DailyStats {
   date: string;
   activeWorkMs: number;
@@ -95,6 +106,14 @@ export interface DeskQuestSettings {
   eyeBreaksEnabled: boolean;
   animationsEnabled: boolean;
   soundsEnabled: boolean;
+  randomEventsEnabled: boolean;
+  remindersEnabled: boolean;
+  microbreakIntervalMinutes: number;
+  movementQuestIntervalMinutes: number;
+  eyeBreakIntervalMinutes: number;
+  recoveryPromptMinutes: number;
+  strongRecoveryNudgeMinutes: number;
+  quietHudOnly: boolean;
   patternRecognition: boolean;
   dailyNotesIntegration: boolean;
   tasksIntegration: boolean;
@@ -113,8 +132,12 @@ export interface DeskQuestData {
   weeklyGoals: Quest[];
   stats: Record<string, DailyStats>;
   completedQuestIds: string[];
+  activeReminder?: ReminderState;
+  reminderHistory: ReminderState[];
   lastHydrationAt?: number;
   lastMealAt?: Partial<Record<MealKind, number>>;
+  lastMovementAt?: number;
+  lastEyeBreakAt?: number;
   onboarded: boolean;
   schemaVersion: number;
 }

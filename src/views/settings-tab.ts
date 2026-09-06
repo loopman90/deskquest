@@ -75,6 +75,16 @@ export class DeskQuestSettingTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
+      .setName("All reminders")
+      .setDesc("Turns DeskQuest reminder generation on or off. Manual commands keep working.")
+      .addToggle((toggle) => toggle
+        .setValue(this.plugin.data.settings.remindersEnabled)
+        .onChange(async (value) => {
+          this.plugin.data.settings.remindersEnabled = value;
+          await this.plugin.saveNow();
+        }));
+
+    new Setting(containerEl)
       .setName("Hydration interval")
       .setDesc("Recommended default: 75 minutes plus a small random offset.")
       .addSlider((slider) => slider
@@ -106,11 +116,67 @@ export class DeskQuestSettingTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
+      .setName("Movement quest interval")
+      .addSlider((slider) => slider
+        .setLimits(20, 120, 5)
+        .setDynamicTooltip()
+        .setValue(this.plugin.data.settings.movementQuestIntervalMinutes)
+        .onChange(async (value) => {
+          this.plugin.data.settings.movementQuestIntervalMinutes = value;
+          await this.plugin.saveNow();
+        }));
+
+    new Setting(containerEl)
       .setName("Eye breaks")
       .addToggle((toggle) => toggle
         .setValue(this.plugin.data.settings.eyeBreaksEnabled)
         .onChange(async (value) => {
           this.plugin.data.settings.eyeBreaksEnabled = value;
+          await this.plugin.saveNow();
+        }));
+
+    new Setting(containerEl)
+      .setName("Eye break interval")
+      .addSlider((slider) => slider
+        .setLimits(10, 60, 5)
+        .setDynamicTooltip()
+        .setValue(this.plugin.data.settings.eyeBreakIntervalMinutes)
+        .onChange(async (value) => {
+          this.plugin.data.settings.eyeBreakIntervalMinutes = value;
+          await this.plugin.saveNow();
+        }));
+
+    new Setting(containerEl)
+      .setName("Recovery prompt")
+      .setDesc("Minutes of continuous active work before DeskQuest suggests recovery.")
+      .addSlider((slider) => slider
+        .setLimits(25, 120, 5)
+        .setDynamicTooltip()
+        .setValue(this.plugin.data.settings.recoveryPromptMinutes)
+        .onChange(async (value) => {
+          this.plugin.data.settings.recoveryPromptMinutes = value;
+          await this.plugin.saveNow();
+        }));
+
+    new Setting(containerEl)
+      .setName("Strong recovery nudge")
+      .setDesc("Minutes of continuous active work before the recovery reminder becomes more visible.")
+      .addSlider((slider) => slider
+        .setLimits(45, 180, 5)
+        .setDynamicTooltip()
+        .setValue(this.plugin.data.settings.strongRecoveryNudgeMinutes)
+        .onChange(async (value) => {
+          this.plugin.data.settings.strongRecoveryNudgeMinutes = value;
+          await this.plugin.saveNow();
+        }));
+
+    new Setting(containerEl)
+      .setName("Random events")
+      .setDesc("Optional. Off by default.")
+      .addToggle((toggle) => toggle
+        .setValue(this.plugin.data.settings.randomEventsEnabled)
+        .onChange(async (value) => {
+          this.plugin.data.settings.randomEventsEnabled = value;
           await this.plugin.saveNow();
         }));
 

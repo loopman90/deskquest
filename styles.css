@@ -113,6 +113,10 @@
   margin: 14px 0 18px;
 }
 
+.deskquest-actions-tight {
+  margin: 10px 0 0;
+}
+
 .deskquest-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -138,6 +142,14 @@
 
 .deskquest-panel-muted {
   color: var(--text-muted);
+}
+
+.deskquest-reminder {
+  border-color: var(--deskquest-accent);
+}
+
+.deskquest-reminder-prompt {
+  box-shadow: inset 3px 0 0 var(--deskquest-accent);
 }
 
 .deskquest-nudge {
@@ -182,6 +194,46 @@
   color: var(--deskquest-accent);
 }
 
+.deskquest-history-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 10px;
+  padding: 6px 0;
+  border-top: 1px solid var(--background-modifier-border);
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.deskquest-history-row:first-of-type {
+  border-top: 0;
+}
+
 .deskquest-settings .setting-item-description {
   max-width: 720px;
+}
+
+.deskquest-onboarding,
+.deskquest-import-modal {
+  display: grid;
+  gap: 12px;
+}
+
+.deskquest-onboarding h2,
+.deskquest-import-modal h2 {
+  margin: 0;
+}
+
+.deskquest-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.deskquest-import-box {
+  width: 100%;
+  min-height: 220px;
+  resize: vertical;
+  font-family: var(--font-monospace);
 }
