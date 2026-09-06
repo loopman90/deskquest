@@ -1,12 +1,12 @@
 import fs from "node:fs";
 
 const tag = process.argv[2];
-if (!tag || !tag.startsWith("v")) {
-  console.error("Expected a semver tag like v0.1.0.");
+if (!tag) {
+  console.error("Expected a semver tag like 0.1.0.");
   process.exit(1);
 }
 
-const expected = tag.slice(1);
+const expected = tag.startsWith("v") ? tag.slice(1) : tag;
 const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
 const versions = JSON.parse(fs.readFileSync("versions.json", "utf8"));

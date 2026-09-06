@@ -167,10 +167,10 @@ For every release, update these files to the same version:
 - `RELEASE_NOTES.md`
 - `CHANGELOG.md`
 
-Then create and push a matching tag:
+Then create and push a matching tag. Obsidian expects the tag to match `manifest.json` exactly, without a leading `v`.
 
 ```bash
-git tag v0.3.0
+git tag 0.3.0
 git push origin main --tags
 ```
 
