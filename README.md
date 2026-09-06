@@ -213,7 +213,7 @@ npm run build
 
 ## Versioning And Releases
 
-Regen uses semver-style versions such as `0.3.1`.
+Regen uses semver-style versions such as `0.3.2`.
 
 For every release, update these files to the same version:
 
@@ -226,7 +226,7 @@ For every release, update these files to the same version:
 Then create and push a matching tag. Obsidian expects the tag to match `manifest.json` exactly, without a leading `v`.
 
 ```bash
-git tag 0.3.1
+git tag 0.3.2
 git push origin main --tags
 ```
 

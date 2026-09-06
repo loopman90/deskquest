@@ -2,6 +2,12 @@
 
 All notable changes to Regen will be documented in this file.
 
+## [0.3.2] - 2026-09-06
+
+### Fixed
+
+- Aligned the Obsidian development dependency with the declared minimum app version.
+
 ## [0.3.1] - 2026-09-06
 
 ### Fixed

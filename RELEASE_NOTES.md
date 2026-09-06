@@ -1,4 +1,4 @@
-# Regen v0.3.1
+# Regen v0.3.2
 
 Community review cleanup release.
 
@@ -38,6 +38,7 @@ Community review cleanup release.
 - Command names and IDs cleaned up for Obsidian conventions
 - `builtin-modules` dependency removed
 - Minimum app version updated to match settings search and destructive button APIs
+- Development dependency metadata now matches the declared minimum app version
 
 ## Safety
 
