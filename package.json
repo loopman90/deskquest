@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "node esbuild.config.mjs",
     "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+    "check-version": "node scripts/check-version.mjs",
     "typecheck": "tsc -noEmit -skipLibCheck"
   },
   "keywords": [

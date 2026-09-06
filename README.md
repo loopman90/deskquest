@@ -122,6 +122,31 @@ Run a production build:
 npm run build
 ```
 
+## Versioning And Releases
+
+DeskQuest uses semver-style versions such as `0.1.0`.
+
+For every release, update these files to the same version:
+
+- `manifest.json`
+- `package.json`
+- `versions.json`
+- `RELEASE_NOTES.md`
+- `CHANGELOG.md`
+
+Then create and push a matching tag:
+
+```bash
+git tag v0.1.0
+git push origin main --tags
+```
+
+GitHub Actions will build the plugin and publish a release with the Obsidian plugin assets:
+
+- `main.js`
+- `manifest.json`
+- `styles.css`
+
 ## Roadmap
 
 V1 foundation:
