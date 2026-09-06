@@ -6,7 +6,12 @@ if (!tag) {
   process.exit(1);
 }
 
-const expected = tag.startsWith("v") ? tag.slice(1) : tag;
+if (tag.startsWith("v")) {
+  console.error("Obsidian releases must be tagged without a leading v.");
+  process.exit(1);
+}
+
+const expected = tag;
 const manifest = JSON.parse(fs.readFileSync("manifest.json", "utf8"));
 const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
 const versions = JSON.parse(fs.readFileSync("versions.json", "utf8"));

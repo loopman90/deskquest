@@ -1,4 +1,4 @@
-import { App, PluginSettingTab, Setting } from "obsidian";
+import { App, PluginSettingTab, Setting, SettingDefinitionItem } from "obsidian";
 import RegenPlugin from "../main";
 import { SKINS } from "../skins/definitions";
 import { DifficultyMode } from "../data/types";
@@ -9,11 +9,26 @@ export class RegenSettingTab extends PluginSettingTab {
   }
 
   display(): void {
-    const { containerEl } = this;
+    this.renderSettings(this.containerEl);
+  }
+
+  getSettingDefinitions(): SettingDefinitionItem[] {
+    return [
+      {
+        name: "Regen Settings",
+        desc: "Configure the HUD, reminders, routines, appearance and local tracking.",
+        render: (setting) => {
+          this.renderSettings(setting.settingEl);
+        }
+      }
+    ];
+  }
+
+  private renderSettings(containerEl: HTMLElement): void {
     containerEl.empty();
     containerEl.addClass("regen-settings");
 
-    containerEl.createEl("h2", { text: "Regen Settings" });
+    new Setting(containerEl).setName("Regen Settings").setHeading();
     containerEl.createEl("p", {
       text: "All values are local game indicators. Regen never blocks work and does not provide medical advice.",
       cls: "setting-item-description"
@@ -24,9 +39,9 @@ export class RegenSettingTab extends PluginSettingTab {
       .setDesc("Turns the HUD, commands and local tracking on or off.")
       .addToggle((toggle) => toggle
         .setValue(this.plugin.data.settings.enabled)
-        .onChange(async (value) => {
+        .onChange((value) => {
           this.plugin.data.settings.enabled = value;
-          await this.plugin.saveNow();
+          void this.plugin.saveNow();
         }));
 
     new Setting(containerEl)
@@ -34,9 +49,9 @@ export class RegenSettingTab extends PluginSettingTab {
       .setDesc("Default off. Regen will never read content from other apps; unsupported platforms fall back to Obsidian activity.")
       .addToggle((toggle) => toggle
         .setValue(this.plugin.data.settings.trackOutsideObsidian)
-        .onChange(async (value) => {
+        .onChange((value) => {
           this.plugin.data.settings.trackOutsideObsidian = value;
-          await this.plugin.saveNow();
+          void this.plugin.saveNow();
         }));
 
     new Setting(containerEl)
@@ -47,9 +62,9 @@ export class RegenSettingTab extends PluginSettingTab {
           dropdown.addOption(mode, label(mode));
         });
         dropdown.setValue(this.plugin.data.settings.difficulty);
-        dropdown.onChange(async (value) => {
+        dropdown.onChange((value) => {
           this.plugin.data.settings.difficulty = value as DifficultyMode;
-          await this.plugin.saveNow();
+          void this.plugin.saveNow();
         });
       });
 
@@ -58,20 +73,19 @@ export class RegenSettingTab extends PluginSettingTab {
       .setDesc("After this many minutes without Obsidian activity, active work and stamina drain pause.")
       .addSlider((slider) => slider
         .setLimits(1, 20, 1)
-        .setDynamicTooltip()
         .setValue(this.plugin.data.settings.idleTimeoutMinutes)
-        .onChange(async (value) => {
+        .onChange((value) => {
           this.plugin.data.settings.idleTimeoutMinutes = value;
-          await this.plugin.saveNow();
+          void this.plugin.saveNow();
         }));
 
     new Setting(containerEl)
       .setName("Hydration reminders")
       .addToggle((toggle) => toggle
         .setValue(this.plugin.data.settings.hydrationEnabled)
-        .onChange(async (value) => {
+        .onChange((value) => {
           this.plugin.data.settings.hydrationEnabled = value;
-          await this.plugin.saveNow();
+          void this.plugin.saveNow();
         }));
 
     new Setting(containerEl)
@@ -79,9 +93,9 @@ export class RegenSettingTab extends PluginSettingTab {
       .setDesc("Turns Regen reminder generation on or off. Manual commands keep working.")
       .addToggle((toggle) => toggle
         .setValue(this.plugin.data.settings.remindersEnabled)
-        .onChange(async (value) => {
+        .onChange((value) => {
           this.plugin.data.settings.remindersEnabled = value;
-          await this.plugin.saveNow();
+          void this.plugin.saveNow();
         }));
 
     new Setting(containerEl)
@@ -89,11 +103,10 @@ export class RegenSettingTab extends PluginSettingTab {
       .setDesc("Recommended default: 75 minutes plus a small random offset.")
       .addSlider((slider) => slider
         .setLimits(30, 120, 5)
-        .setDynamicTooltip()
         .setValue(this.plugin.data.settings.hydrationIntervalMinutes)
-        .onChange(async (value) => {
+        .onChange((value) => {
           this.plugin.data.settings.hydrationIntervalMinutes = value;
-          await this.plugin.saveNow();
+          void this.plugin.saveNow();
         }));
 
     new Setting(containerEl)
@@ -101,49 +114,47 @@ export class RegenSettingTab extends PluginSettingTab {
       .setDesc("Logbook only. No medical judgement is made.")
       .addToggle((toggle) => toggle
         .setValue(this.plugin.data.settings.caffeineMode)
-        .onChange(async (value) => {
+        .onChange((value) => {
           this.plugin.data.settings.caffeineMode = value;
-          await this.plugin.saveNow();
+          void this.plugin.saveNow();
         }));
 
     new Setting(containerEl)
       .setName("Movement quests")
       .addToggle((toggle) => toggle
         .setValue(this.plugin.data.settings.movementEnabled)
-        .onChange(async (value) => {
+        .onChange((value) => {
           this.plugin.data.settings.movementEnabled = value;
-          await this.plugin.saveNow();
+          void this.plugin.saveNow();
         }));
 
     new Setting(containerEl)
       .setName("Movement quest interval")
       .addSlider((slider) => slider
         .setLimits(20, 120, 5)
-        .setDynamicTooltip()
         .setValue(this.plugin.data.settings.movementQuestIntervalMinutes)
-        .onChange(async (value) => {
+        .onChange((value) => {
           this.plugin.data.settings.movementQuestIntervalMinutes = value;
-          await this.plugin.saveNow();
+          void this.plugin.saveNow();
         }));
 
     new Setting(containerEl)
       .setName("Eye breaks")
       .addToggle((toggle) => toggle
         .setValue(this.plugin.data.settings.eyeBreaksEnabled)
-        .onChange(async (value) => {
+        .onChange((value) => {
           this.plugin.data.settings.eyeBreaksEnabled = value;
-          await this.plugin.saveNow();
+          void this.plugin.saveNow();
         }));
 
     new Setting(containerEl)
       .setName("Eye break interval")
       .addSlider((slider) => slider
         .setLimits(10, 60, 5)
-        .setDynamicTooltip()
         .setValue(this.plugin.data.settings.eyeBreakIntervalMinutes)
-        .onChange(async (value) => {
+        .onChange((value) => {
           this.plugin.data.settings.eyeBreakIntervalMinutes = value;
-          await this.plugin.saveNow();
+          void this.plugin.saveNow();
         }));
 
     new Setting(containerEl)
@@ -151,11 +162,10 @@ export class RegenSettingTab extends PluginSettingTab {
       .setDesc("Minutes of continuous active work before Regen suggests recovery.")
       .addSlider((slider) => slider
         .setLimits(25, 120, 5)
-        .setDynamicTooltip()
         .setValue(this.plugin.data.settings.recoveryPromptMinutes)
-        .onChange(async (value) => {
+        .onChange((value) => {
           this.plugin.data.settings.recoveryPromptMinutes = value;
-          await this.plugin.saveNow();
+          void this.plugin.saveNow();
         }));
 
     new Setting(containerEl)
@@ -163,11 +173,10 @@ export class RegenSettingTab extends PluginSettingTab {
       .setDesc("Minutes of continuous active work before the recovery reminder becomes more visible.")
       .addSlider((slider) => slider
         .setLimits(45, 180, 5)
-        .setDynamicTooltip()
         .setValue(this.plugin.data.settings.strongRecoveryNudgeMinutes)
-        .onChange(async (value) => {
+        .onChange((value) => {
           this.plugin.data.settings.strongRecoveryNudgeMinutes = value;
-          await this.plugin.saveNow();
+          void this.plugin.saveNow();
         }));
 
     new Setting(containerEl)
@@ -175,9 +184,9 @@ export class RegenSettingTab extends PluginSettingTab {
       .setDesc("Optional. Off by default.")
       .addToggle((toggle) => toggle
         .setValue(this.plugin.data.settings.randomEventsEnabled)
-        .onChange(async (value) => {
+        .onChange((value) => {
           this.plugin.data.settings.randomEventsEnabled = value;
-          await this.plugin.saveNow();
+          void this.plugin.saveNow();
         }));
 
     new Setting(containerEl)
@@ -187,9 +196,9 @@ export class RegenSettingTab extends PluginSettingTab {
         .addOption("compact", "Compact")
         .addOption("minimal", "Minimal")
         .setValue(this.plugin.data.settings.hudMode)
-        .onChange(async (value) => {
+        .onChange((value) => {
           this.plugin.data.settings.hudMode = value as "full" | "compact" | "minimal";
-          await this.plugin.saveNow();
+          void this.plugin.saveNow();
           this.plugin.refreshUi();
         }));
 
@@ -199,9 +208,9 @@ export class RegenSettingTab extends PluginSettingTab {
       .addDropdown((dropdown) => {
         SKINS.forEach((skin) => dropdown.addOption(skin.id, skin.name));
         dropdown.setValue(this.plugin.data.settings.skin);
-        dropdown.onChange(async (value) => {
+        dropdown.onChange((value) => {
           this.plugin.data.settings.skin = value;
-          await this.plugin.saveNow();
+          void this.plugin.saveNow();
           this.plugin.applySkin();
         });
       });

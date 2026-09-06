@@ -50,7 +50,7 @@ BRAT is the easiest way to install and update beta Obsidian plugins from GitHub.
 8. Confirm the installation.
 9. Go back to **Settings -> Community plugins**.
 10. Enable **Regen**.
-11. Run **Regen: Open Regen** from the command palette.
+11. Run **Regen: Open** from the command palette.
 
 ### Option 2: Manual Install From GitHub Release
 
@@ -85,7 +85,7 @@ Use this if you do not want to use BRAT.
 
 6. Restart Obsidian, or reload plugins from **Settings -> Community plugins**.
 7. Enable **Regen**.
-8. Run **Regen: Open Regen** from the command palette.
+8. Run **Regen: Open** from the command palette.
 
 ### Option 3: Build From Source
 
@@ -145,7 +145,7 @@ If you installed manually, download the latest release assets again and replace 
 
 ## Usage
 
-Open the command palette and run **Regen: Open Regen**.
+Open the command palette and run **Regen: Open**.
 
 Common commands:
 
@@ -158,8 +158,8 @@ Common commands:
 - Register Snack
 - Start Movement Quest
 - End Workday
-- Export Regen Data as JSON
-- Export Regen Stats as CSV
+- Export Data as JSON
+- Export Stats as CSV
 
 ## Presets
 
@@ -213,7 +213,7 @@ npm run build
 
 ## Versioning And Releases
 
-Regen uses semver-style versions such as `0.3.0`.
+Regen uses semver-style versions such as `0.3.1`.
 
 For every release, update these files to the same version:
 
@@ -226,7 +226,7 @@ For every release, update these files to the same version:
 Then create and push a matching tag. Obsidian expects the tag to match `manifest.json` exactly, without a leading `v`.
 
 ```bash
-git tag 0.3.0
+git tag 0.3.1
 git push origin main --tags
 ```
 

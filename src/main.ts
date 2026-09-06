@@ -47,13 +47,12 @@ export default class RegenPlugin extends Plugin {
       this.app.workspace.onLayoutReady(() => new OnboardingModal(this).open());
     }
 
-    console.log("Regen loaded.");
   }
 
-  async onunload(): Promise<void> {
+  onunload(): void {
     this.unsubscribeSession?.();
     this.sessions.unload();
-    await this.saveNow();
+    void this.saveNow();
   }
 
   requestSave(): void {
@@ -98,16 +97,16 @@ export default class RegenPlugin extends Plugin {
   async openDashboard(): Promise<void> {
     let leaf = this.app.workspace.getLeavesOfType(REGEN_VIEW_TYPE)[0];
     if (!leaf) {
-      leaf = this.app.workspace.getRightLeaf(false) ?? this.app.workspace.getLeaf(true);
+      leaf = this.app.workspace.getLeaf(true);
       await leaf.setViewState({ type: REGEN_VIEW_TYPE, active: true });
     }
-    this.app.workspace.revealLeaf(leaf);
+    this.app.workspace.setActiveLeaf(leaf, { focus: true });
   }
 
   private addCommands(): void {
     this.addCommand({
-      id: "open-regen",
-      name: "Open Regen",
+      id: "open",
+      name: "Open",
       callback: () => void this.openDashboard()
     });
     this.addCommand({
@@ -197,13 +196,13 @@ export default class RegenPlugin extends Plugin {
       callback: () => this.reminders.dismiss()
     });
     this.addCommand({
-      id: "pause-regen",
-      name: "Pause Regen",
+      id: "pause",
+      name: "Pause",
       callback: () => this.sessions.pause()
     });
     this.addCommand({
-      id: "resume-regen",
-      name: "Resume Regen",
+      id: "resume",
+      name: "Resume",
       callback: () => this.sessions.resume()
     });
     this.addCommand({
@@ -238,17 +237,17 @@ export default class RegenPlugin extends Plugin {
     });
     this.addCommand({
       id: "export-json",
-      name: "Export Regen Data as JSON",
+      name: "Export Data as JSON",
       callback: () => void this.exportJson()
     });
     this.addCommand({
       id: "export-csv",
-      name: "Export Regen Stats as CSV",
+      name: "Export Stats as CSV",
       callback: () => void this.exportCsv()
     });
     this.addCommand({
       id: "import-json",
-      name: "Import Regen Data from JSON",
+      name: "Import Data from JSON",
       callback: () => new ImportModal(this).open()
     });
     this.addCommand({

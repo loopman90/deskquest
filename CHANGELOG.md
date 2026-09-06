@@ -2,6 +2,19 @@
 
 All notable changes to Regen will be documented in this file.
 
+## [0.3.1] - 2026-09-06
+
+### Fixed
+
+- Removed redundant directory-context wording from the manifest description.
+- Changed `authorUrl` to the author profile URL.
+- Replaced a newer workspace reveal API with `setActiveLeaf`.
+- Replaced deprecated destructive button and slider tooltip APIs.
+- Removed the `builtin-modules` package.
+- Cleaned command names and IDs so they do not repeat the plugin name.
+- Added release asset artifact attestations.
+- Updated the minimum app version to match the newer settings APIs used by the plugin.
+
 ## [0.3.0] - 2026-09-06
 
 ### Changed

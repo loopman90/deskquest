@@ -114,7 +114,7 @@ export class RegenDashboardView extends ItemView {
     const stats = this.data.stats[todayKey()];
     card.createEl("h2", { text: "Workday Score" });
     const score = stats?.workdayScore ?? 0;
-    card.createEl("div", { text: String(score), cls: "regen-score" });
+    card.createDiv({ text: String(score), cls: "regen-score" });
     card.createEl("p", { text: workdayScoreLabel(score) });
     card.createEl("p", { text: `Hydration: ${stats?.hydrationCheckins ?? 0}` });
     card.createEl("p", { text: `Movement: ${stats?.movementQuests ?? 0}` });

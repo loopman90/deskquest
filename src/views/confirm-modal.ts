@@ -19,9 +19,13 @@ export class ConfirmModal extends Modal {
     contentEl.createEl("p", { text: this.message });
     const actions = contentEl.createDiv({ cls: "regen-modal-actions" });
     new ButtonComponent(actions).setButtonText("Cancel").onClick(() => this.close());
-    new ButtonComponent(actions).setButtonText(this.confirmLabel).setWarning().onClick(async () => {
-      await this.onConfirm();
-      this.close();
+    new ButtonComponent(actions).setButtonText(this.confirmLabel).setDestructive().onClick(() => {
+      void this.confirm();
     });
+  }
+
+  private async confirm(): Promise<void> {
+    await this.onConfirm();
+    this.close();
   }
 }

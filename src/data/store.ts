@@ -8,7 +8,7 @@ export class RegenStore {
   constructor(private readonly plugin: Plugin) {}
 
   async load(): Promise<RegenData> {
-    const saved = await this.plugin.loadData();
+    const saved: unknown = await this.plugin.loadData();
     const defaults = createDefaultData();
     if (!saved || typeof saved !== "object") {
       return defaults;

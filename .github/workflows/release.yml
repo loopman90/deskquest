@@ -3,11 +3,12 @@ name: Release Obsidian Plugin
 on:
   push:
     tags:
-      - "v*.*.*"
       - "*.*.*"
 
 permissions:
   contents: write
+  id-token: write
+  attestations: write
 
 jobs:
   release:
@@ -40,6 +41,14 @@ jobs:
           name: Regen ${{ github.ref_name }}
           body_path: RELEASE_NOTES.md
           files: |
+            main.js
+            manifest.json
+            styles.css
+
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v4
+        with:
+          subject-path: |
             main.js
             manifest.json
             styles.css
